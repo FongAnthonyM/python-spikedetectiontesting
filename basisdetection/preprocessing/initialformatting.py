@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" __init__.py
-Description: 
+""" initialformatting.py
+Description: Classes and Functions that format the initial data before being cleaned.
 """
 __author__ = "Anthony Fong"
 __copyright__ = "Copyright 2021, Anthony Fong"
@@ -17,6 +17,15 @@ __status__ = "Prototype"
 # Downloaded Libraries #
 
 # Local Libraries #
-from .hdf5objects.src import hdf5objects
-from .zappy import zappy
+from subrepos import hdf5objects
+from subrepos import zappy
 
+# Definitions #
+# Functions #
+
+
+
+
+# Main #
+if __name__ == "__main__":
+    pass

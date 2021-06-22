@@ -17,6 +17,11 @@ __status__ = "Prototype"
 # Downloaded Libraries #
 
 # Local Libraries #
-from .hdf5objects.src import hdf5objects
-from .zappy import zappy
 
+
+# Definitions #
+# Classes #
+
+# Main #
+if __name__ == "__main__":
+    pass
