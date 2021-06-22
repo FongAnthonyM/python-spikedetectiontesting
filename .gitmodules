@@ -1,0 +1,6 @@
+[submodule "subrepos/zappy"]
+	path = subrepos/zappy
+	url = https://github.com/akhambhati/zappy.git
+[submodule "subrepos/hdf5objects"]
+	path = subrepos/hdf5objects
+	url = https://github.com/FongAnthonyM/python-hdf5objects.git
