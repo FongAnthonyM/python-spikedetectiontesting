@@ -13,14 +13,17 @@ __email__ = ""
 __status__ = "Prototype"
 
 # Default Libraries #
+import datetime
 import pathlib
 
 # Downloaded Libraries #
+import matplotlib.pyplot as plt
+import numpy as np
 import pytest
 
 # Local Libraries #
-from ..initialformatting import *
-
+from basisdetection.preprocessing.initialformatting import *
+from subrepos.zappy.zappy.pipelines.general_preproc import ieeg_screening_pipeline
 
 # Definitions #
 # Functions #
@@ -42,6 +45,59 @@ class ClassTest:
         with path.open() as f_object:
             lines = f_object.readlines()
         return lines
+
+
+class TestResample(ClassTest):
+
+    def test_interpolation(self):
+        samples = 1000
+        x_axis = np.arange(0, samples)
+        data = np.cos(x_axis ** 2.0 / 8.0) + 1
+        fs_old = 512
+        fs_new = 1024
+
+        rs = Resample(data, fs_new, fs_old)
+        new_data = rs.interpolate()
+
+        assert new_data.shape[0] == samples*2
+
+    def test_evaluate(self):
+        samples = 1000
+        x_axis = np.linspace(0, 100, samples)
+        x_axis_ds = np.linspace(0, 100, samples//2)
+        data = np.cos(x_axis ** 2.0 / 8.0) + 1
+        fs_old = 1024
+        fs_new = 512
+
+        rs = Resample(data, fs_new, fs_old)
+        new_data, fs = rs.evaluate()
+
+        control, _ = ieeg_screening_pipeline(data, fs_old, fs_new)
+
+        plt.plot(x_axis, data, ':', label="original data")
+        plt.plot(x_axis_ds, new_data, '-', label="new data")
+        plt.plot(x_axis_ds, control, '.', label="control data")
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.ylim([-0.1, 3])
+        plt.legend(loc="best")
+
+        assert new_data.shape[0] == samples/2
+
+
+class TestStudyDataFormatter(ClassTest):
+
+    def test_process_and_save(self):
+        first = datetime.datetime(2020, 9, 21, 15, 00, 00)
+        second = datetime.datetime(2020, 9, 21, 16, 00, 00)
+
+        spath = pathlib.Path("/Users/changlab/Documents/Projects/Epilepsy Spike Detection")
+        opath = pathlib.Path("/Users/changlab/Documents/Projects/Epilepsy Spike Detection")
+        sdf = StudyDataFormatter("EC228", 512, 1024, spath=spath, opath=opath)
+
+        sdf.process_data_range_save(name="EC228 Test", s=first, e=second)
+
+        assert 1
 
 
 # Main #
