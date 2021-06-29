@@ -198,8 +198,9 @@ class Resample(BaseObject):
             axis = self.axis
 
         slices = [None] * len(data.shape)
-        for ax, index in enumerate(indices):
-            slices[ax] = index
+        if indices is not None:
+            for ax, index in enumerate(indices):
+                slices[ax] = index
         slices[axis] = slice(None, None, self.q)
 
         data = data[tuple(slices)]

@@ -91,8 +91,8 @@ class TestStudyDataFormatter(ClassTest):
         first = datetime.datetime(2020, 9, 21, 15, 00, 00)
         second = datetime.datetime(2020, 9, 21, 16, 00, 00)
 
-        spath = pathlib.Path("/Users/changlab/Documents/Projects/Epilepsy Spike Detection")
-        opath = pathlib.Path("/Users/changlab/Documents/Projects/Epilepsy Spike Detection")
+        spath = pathlib.Path("~/Documents/Projects/Epilepsy Spike Detection")
+        opath = pathlib.Path("~/Documents/Projects/Epilepsy Spike Detection")
         sdf = StudyDataFormatter("EC228", 512, 1024, spath=spath, opath=opath)
 
         sdf.process_data_range_save(name="EC228 Test", s=first, e=second, indices=[None, slice(None, 184)])
