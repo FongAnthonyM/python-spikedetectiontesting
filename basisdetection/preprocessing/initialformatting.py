@@ -193,11 +193,19 @@ class Resample(BaseObject):
 
         return data
 
-    def downsample(self, data):
-        data = data[::self.q]
+    def downsample(self, data, indices=None, axis=None):
+        if axis is not None:
+            axis = self.axis
+
+        slices = [None] * len(data.shape)
+        for ax, index in enumerate(indices):
+            slices[ax] = index
+        slices[axis] = slice(None, None, self.q)
+
+        data = data[tuple(slices)]
         return data
 
-    def evaluate(self, data=None, new_fs=None, old_fs=None, copy_=True):
+    def evaluate(self, data=None, new_fs=None, old_fs=None, indices=None, copy_=True):
         if data is not None:
             self.data = data
 
@@ -220,7 +228,7 @@ class Resample(BaseObject):
             data = self.filter(data, copy_=False)
 
         # Downsample
-        data = self.downsample(data)
+        data = self.downsample(data, indices)
 
         return data, self.true_fs
 
@@ -259,13 +267,15 @@ class DataFormatter(BaseObject):
 
         self.resample = Resample(data, new_fs, old_fs, axis)
 
-    def evaluate(self, data=None, copy_=True):
+    def evaluate(self, data=None, indices=None, copy_=True):
         if data is None:
             data = self.data
         else:
             self.data = data
 
-        if copy_:
+        if indices is not None:
+            data = data[indices]
+        elif copy_:
             data = data.copy()
 
         data, true_fs = self.resample.evaluate(data, copy_=False)
@@ -359,7 +369,11 @@ class StudyDataFormatter(StudyDataProcessor):
         self.data_formatter = DataFormatter(new_fs=new_fs, old_fs=old_fs, axis=axis)
         self.process = self.data_formatter.evaluate
 
-    def process_data_range_save(self, name=None, opath=None, s=None, e=None,
+    def process_data_range(self, s=None, e=None, indices=None, rnd=False, tails=False, frame=False, separate=False):
+        d, _, _ = self.study.data_range(s, e, rnd, tails, frame, separate)
+        return self.process(d, indices)
+
+    def process_data_range_save(self, name=None, opath=None, s=None, e=None, indices=None,
                                 rnd=False, tails=False, frame=False, separate=False):
         if name is None:
             name = self.subject
@@ -367,7 +381,7 @@ class StudyDataFormatter(StudyDataProcessor):
         if opath is None:
             opath = self.out_path
 
-        data, true_fs = self.process_data_range(s, e, rnd, tails, frame, separate)
+        data, true_fs = self.process_data_range(s, e, indices, rnd, tails, frame, separate)
         sample_axis = np.arange(0, data.shape[0])
         time_axis = np.linspace(s.timestamp(), e.timestamp(), data.shape[0])
 
