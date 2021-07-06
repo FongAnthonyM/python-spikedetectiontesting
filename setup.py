@@ -13,29 +13,12 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-def read(*names, **kwargs):
-    with io.open(
-        join(dirname(__file__), *names),
-        encoding=kwargs.get('encoding', 'utf8')
-    ) as fh:
-        return fh.read()
-
-
 setup(
-    name='hdf5objects',
+    name='A',
     version='0.1.0',
-    license='BSD-2-Clause',
-    description='Extra objects for handling and typing HDF5 files.',
-    long_description='%s\n%s' % (
-        re.compile('^.. start-badges.*^.. end-badges', re.M | re.S).sub('', read('README.rst')),
-        re.sub(':[a-z]+:`~?(.*?)`', r'``\1``', read('CHANGELOG.rst'))
-    ),
+    license='MIT',
     author='Anthony Michael Fong',
     author_email='FongAnthonyM@gmail.com',
-    url='https://github.com/fonganthonym/python-hdf5objects',
-    packages=find_packages('src'),
-    package_dir={'': 'src'},
-    py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],
     include_package_data=True,
     zip_safe=False,
     classifiers=[
@@ -61,17 +44,9 @@ setup(
         # 'Programming Language :: Python :: Implementation :: Stackless',
         'Topic :: Utilities',
     ],
-    project_urls={
-        'Documentation': 'https://python-hdf5objects.readthedocs.io/',
-        'Changelog': 'https://python-hdf5objects.readthedocs.io/en/latest/changelog.html',
-        'Issue Tracker': 'https://github.com/fonganthonym/python-hdf5objects/issues',
-    },
-    keywords=[
-        # eg: 'keyword1', 'keyword2', 'keyword3',
-    ],
     python_requires='>=3.6',
     install_requires=[
-        'baseobjects>=1.1.1', 'h5py>=3.2.1', 'numpy'
+        'baseobjects>=1.1.1', 'h5py>=3.2.1', 'numpy', 'scipy'
     ],
     extras_require={
         "dev": ['pytest>=6.2.3'],

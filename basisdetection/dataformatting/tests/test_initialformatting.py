@@ -18,12 +18,12 @@ import pathlib
 
 # Downloaded Libraries #
 import matplotlib.pyplot as plt
-import numpy as np
 import pytest
 
 # Local Libraries #
-from basisdetection.preprocessing.initialformatting import *
+from basisdetection.dataformatting.initialformatting import *
 from subrepos.zappy.zappy.pipelines.general_preproc import ieeg_screening_pipeline
+
 
 # Definitions #
 # Functions #
@@ -96,7 +96,6 @@ class TestStudyDataFormatter(ClassTest):
         sdf = StudyDataFormatter("EC228", 512, 1024, spath=spath, opath=opath)
 
         sdf.process_data_range_save(name="EC228 00-01", s=first, e=second, indices=[slice(None, None), slice(None, 184)])
-        #sdf.process_data_range_save(name="EC228 Test", s=first, e=second)
 
         assert 1
 

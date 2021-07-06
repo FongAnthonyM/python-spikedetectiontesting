@@ -24,7 +24,6 @@ from scipy.signal import sosfiltfilt, butter, buttord
 # Local Libraries #
 from subrepos.hdf5objects.src.hdf5objects.xltek.hdf5xltekstudy import HDF5XLTEKstudy, HDF5XLTEK
 from subrepos import hdf5objects
-from subrepos import zappy
 
 
 # Definitions #
