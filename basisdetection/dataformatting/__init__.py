@@ -17,8 +17,8 @@ __status__ = "Prototype"
 # Downloaded Libraries #
 
 # Local Libraries #
-from initialformatting import construct_low_pass_filter, construct_high_pass_filter
-from initialformatting import remove_dc_drift, remove_dc_offset
-from initialformatting import Resample, DataFormatter
-from initialformatting import StudyDataProcessor, StudyDataFormatter
+from .initialformatting import construct_low_pass_filter, construct_high_pass_filter
+from .initialformatting import remove_dc_drift, remove_dc_offset
+from .initialformatting import Resample, DataFormatter
+from .initialformatting import StudyDataProcessor, StudyDataFormatter
 
