@@ -194,10 +194,10 @@ class Resample(BaseObject):
         return data
 
     def downsample(self, data, indices=None, axis=None):
-        if axis is not None:
+        if axis is None:
             axis = self.axis
 
-        slices = [None] * len(data.shape)
+        slices = [slice(None, None)] * len(data.shape)
         if indices is not None:
             for ax, index in enumerate(indices):
                 slices[ax] = index
@@ -275,7 +275,7 @@ class DataFormatter(BaseObject):
             self.data = data
 
         if indices is not None:
-            data = data[indices]
+            data = data[tuple(indices)]
         elif copy_:
             data = data.copy()
 
