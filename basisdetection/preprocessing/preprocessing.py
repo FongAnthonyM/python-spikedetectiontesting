@@ -21,7 +21,7 @@ import scipy
 # Local Libraries #
 from ..dataformatting import *
 from subrepos.hdf5objects.src.hdf5objects.xltek.hdf5xltekstudy import HDF5XLTEKstudy, HDF5XLTEK
-from subrepos import zappy
+from subrepos import zappy as zp
 
 
 # Definitions #
@@ -31,9 +31,11 @@ class PreprocessingTest(DataFormatter):
         d, true_fs = super().evaluate(data, indices, copy_)
         # Todo: Fill this in, Ankit
 
+        #
+        d = zp.sigproc.reference.general_reref(d)
+        d = zp.sigproc.filters.notch_line(d, true_fs, notch_freq=60.0, bw=2.0, harm=True)
 
-
-        return data, true_fs
+        return d, true_fs
 
 
 class StudyDataPreprocessorTest(StudyDataProcessor):
