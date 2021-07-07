@@ -88,11 +88,19 @@ class TestResample(ClassTest):
 class TestStudyDataFormatter(ClassTest):
 
     def test_process_and_save(self):
+
+        first = datetime.datetime(2020, 9, 22, 0, 00, 00)
+        second = datetime.datetime(2020, 9, 22, 0, 10, 00)
+
+        spath = pathlib.Path("/userdata/akhambhati/Hoth/Remotes/CORE.EMU_SpikeDetection")
+        opath = pathlib.Path("/userdata/akhambhati/Hoth/Remotes/RSRCH.EMU_SpikeDetection")
+        """ 
         first = datetime.datetime(2020, 9, 22, 0, 00, 00)
         second = datetime.datetime(2020, 9, 22, 1, 00, 00)
 
         spath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
         opath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
+        """
         sdf = StudyDataFormatter("EC228", 512, 1024, spath=spath, opath=opath)
 
         sdf.process_data_range_save(name="EC228 00-01", s=first, e=second, indices=[slice(None, None), slice(None, 184)])
@@ -100,8 +108,8 @@ class TestStudyDataFormatter(ClassTest):
         assert 1
 
     def test_EC228_loop(self):
-        spath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
-        opath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
+        #spath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
+        #opath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
 
         for h in range(0, 24):
             first = datetime.datetime(2020, 9, 22, h, 00, 00)
@@ -114,7 +122,6 @@ class TestStudyDataFormatter(ClassTest):
 
             sdf.process_data_range_save(name=f"EC228 {h}-{h+1}", s=first, e=second,
                                         indices=[slice(None, None), slice(None, 184)])
-
 
 # Main #
 if __name__ == '__main__':
