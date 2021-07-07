@@ -51,8 +51,8 @@ class TestPreprocessing(ClassTest):
         first = datetime.datetime(2020, 9, 22, 0, 00, 00)
         second = datetime.datetime(2020, 9, 22, 1, 00, 00)
 
-        spath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
-        opath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
+        spath = pathlib.Path("/userdata/akhambhati/Hoth/Remotes/CORE.EMU_SpikeDetection")
+        opath = pathlib.Path("/userdata/akhambhati/Hoth/Remotes/RSRCH.EMU_SpikeDetection")
         sdf = StudyDataPreprocessorTest("EC228", 512, 1024, spath=spath, opath=opath)
 
         sdf.process_data_range_save(name="EC228 00-01", s=first, e=second,
