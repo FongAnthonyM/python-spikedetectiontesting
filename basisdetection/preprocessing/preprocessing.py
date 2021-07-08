@@ -32,8 +32,8 @@ class PreprocessingTest(DataFormatter):
         # Todo: Fill this in, Ankit
 
         #
-        d = zp.sigproc.reference.general_reref(d)
         d = zp.sigproc.filters.notch_line(d, true_fs, notch_freq=60.0, bw=2.0, harm=True)
+        d = zp.sigproc.reference.general_reref(d)
 
         return d, true_fs
 
