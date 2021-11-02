@@ -88,20 +88,20 @@ class TestResample(ClassTest):
 class TestStudyDataFormatter(ClassTest):
 
     def test_process_and_save(self):
-        first = datetime.datetime(2020, 9, 22, 0, 00, 00)
-        second = datetime.datetime(2020, 9, 22, 1, 00, 00)
+        first = datetime.datetime(2020, 1, 28, 12, 00, 00)
+        second = datetime.datetime(2020, 1, 28, 12, 45, 00)
 
-        spath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
-        opath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
-        sdf = StudyDataFormatter("EC228", 512, 1024, spath=spath, opath=opath)
+        spath = pathlib.Path("/common/subjects/")
+        opath = pathlib.Path("/home/anthonyfong/Documents/Projects/Epilepsy Spike Detection")
+        sdf = StudyDataFormatter("EC212", 512, 1024, spath=spath, opath=opath)
 
-        sdf.process_data_range_save(name="EC228 00-01", s=first, e=second, indices=[slice(None, None), slice(None, 184)])
+        sdf.process_data_range_save(name="EC212 2020-01-28 12-13", s=first, e=second, indices=[slice(None, None), slice(None, 184)])
 
         assert 1
 
     def test_EC228_loop(self):
-        spath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
-        opath = pathlib.Path("/home/ucsf/Documents/Projects/Epilepsy Spike Detection")
+        spath = pathlib.Path("/common/subjects/")
+        opath = pathlib.Path("/home/anthonyfong/Documents/Projects/Epilepsy Spike Detection")
 
         for h in range(0, 24):
             first = datetime.datetime(2020, 9, 22, h, 00, 00)
@@ -112,8 +112,40 @@ class TestStudyDataFormatter(ClassTest):
 
             sdf = StudyDataFormatter("EC228", 512, 1024, spath=spath, opath=opath)
 
-            sdf.process_data_range_save(name=f"EC228 {h}-{h+1}", s=first, e=second,
-                                        indices=[slice(None, None), slice(None, 184)])
+            sdf.process_data_range_save(name=f"EC228 2020-09-23 {h}-{h+1}", s=first, e=second,
+                                        indices=[slice(None, None), slice(None, 1)])
+
+    def test_EC212_loop(self):
+        spath = pathlib.Path("/common/subjects/")
+        opath = pathlib.Path("/home/anthonyfong/Documents/Projects/Epilepsy Spike Detection")
+
+        for h in range(0, 24):
+            first = datetime.datetime(2020, 1, 28, h, 00, 00)
+            if h+1 == 24:
+                second = datetime.datetime(2020, 1, 29, 00, 00, 00)
+            else:
+                second = datetime.datetime(2020, 1, 28, h + 1, 00, 00)
+
+            sdf = StudyDataFormatter("EC212", 512, 1024, spath=spath, opath=opath)
+
+            sdf.process_data_range_save(name=f"EC212 2020-01-28 {h}-{h+1}", s=first, e=second,
+                                        indices=[slice(None, None), slice(None, 159)])
+
+    def test_EC133_loop(self):
+        spath = pathlib.Path("/common/subjects/")
+        opath = pathlib.Path("/mnt/changserver/userdata/afong/EpilepsySpikeDetection/EC133")
+
+        for h in range(0, 14):
+            first = datetime.datetime(2016, 9, 14, h, 00, 00)
+            if h+1 == 24:
+                second = datetime.datetime(2016, 9, 15, 00, 00, 00)
+            else:
+                second = datetime.datetime(2016, 9, 14, h + 1, 00, 00)
+
+            sdf = StudyDataFormatter("EC133", 512, 1024, spath=spath, opath=opath)
+
+            sdf.process_data_range_save(name=f"EC133 2016-09-14 {h}-{h+1}", s=first, e=second,
+                                        indices=[slice(None, None), slice(None, 127)])
 
 
 # Main #
