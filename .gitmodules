@@ -1,3 +1,0 @@
-[submodule "subrepos/zappy"]
-	path = subrepos/zappy
-	url = https://github.com/akhambhati/zappy.git
